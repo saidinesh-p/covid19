@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easyway.covid19.dao.UserSessionDao">
+
+
+    <insert id="createOrUpdateUser" parameterType="UserSession" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT into user_session(session_token,session_start_time, session_expiry_time,user_info_id) values(#{sessionToken}, #{sessionStartTime}, #{sessionExpiryTime}, #{userInfoId})
+    </insert>
+
+    <delete id="deleteUserSessionBySessionToken" parameterType="String">
+        DELETE From user_session where session_token=#{sessionToken}
+    </delete>
+
+    <select id="getSessionBySessionToken" parameterType="map" resultMap="SessionResult">
+        select * From user_session where session_token=#{sessionToken} and user_info_id=#{userInfoId}
+    </select>
+
+    <resultMap id="SessionResult" type="UserSession">
+        <id property="id" column="id" />
+        <result property="sessionToken" column="session_token" />
+        <result property="sessionStartTime" column="session_start_time" />
+        <result property="sessionExpiryTime" column="session_expiry_time" />
+        <result property="userInfoId" column="user_info_id" />
+    </resultMap>
+
+</mapper>

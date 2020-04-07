@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.easyway.covid19.dao.RecordsDao">
+
+    <insert id="addRecordDetails" parameterType="Records" useGeneratedKeys="true"
+            keyProperty="id">
+        INSERT into records(state, total, active,recovered, deaths)
+        values(#{state}, #{total},#{active},#{recovered}, #{deaths})
+    </insert>
+
+    <insert id="updateRecordDetails" parameterType="Records"
+            keyProperty="id">
+        UPDATE records set total=#{total}, active=#{active}, recovered=#{recovered},deaths= #{deaths} where state = #{state}
+    </insert>
+
+    <insert id="getRecordDetails" parameterType="Records">
+            SELECT * from records where state=#{state}
+    </insert>
+
+    <resultMap id="recordsDetails" type="Records">
+        <id property="id" column="id"/>
+        <result property="state" column="state"/>
+        <result property="total" column="total"/>
+        <result property="active" column="active"/>
+        <result property="recovered" column="recovered"/>
+        <result property="deaths" column="deaths"/>
+
+    </resultMap>
+
+</mapper>
